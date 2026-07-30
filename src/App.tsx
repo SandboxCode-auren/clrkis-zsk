@@ -12,6 +12,10 @@ import { TerminalInput } from './components/TerminalInput';
 import { TerminalPerformanceOverlay } from './components/TerminalPerformanceOverlay';
 import { AuthModal } from './components/AuthModal';
 import { NotificationsDrawer } from './components/NotificationsDrawer';
+import { GoogleTasksDrawer } from './components/GoogleTasksDrawer';
+import { GoogleDocsDrawer } from './components/GoogleDocsDrawer';
+import { GoogleChatDrawer } from './components/GoogleChatDrawer';
+import { GoogleFormsDrawer } from './components/GoogleFormsDrawer';
 import { FileViewerModal } from './components/FileViewerModal';
 import { MainMenuDrawer } from './components/MainMenuDrawer';
 import {
@@ -151,6 +155,10 @@ export default function App() {
   // UI Drawer & Modal Visibility
   const [isAuthOpen, setIsAuthOpen] = useState(false);
   const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
+  const [isGoogleTasksOpen, setIsGoogleTasksOpen] = useState(false);
+  const [isGoogleDocsOpen, setIsGoogleDocsOpen] = useState(false);
+  const [isGoogleChatOpen, setIsGoogleChatOpen] = useState(false);
+  const [isGoogleFormsOpen, setIsGoogleFormsOpen] = useState(false);
   const [isMainMenuOpen, setIsMainMenuOpen] = useState(false);
   const [cleanHomeMode, setCleanHomeMode] = useState(true);
   const [mobileTab, setMobileTab] = useState<'terminal' | 'files' | 'watson'>('terminal');
@@ -255,6 +263,10 @@ export default function App() {
         notifications={notifications}
         onOpenAuth={() => setIsAuthOpen(true)}
         onOpenNotifications={() => setIsNotificationsOpen(true)}
+        onOpenGoogleTasks={() => setIsGoogleTasksOpen(true)}
+        onOpenGoogleDocs={() => setIsGoogleDocsOpen(true)}
+        onOpenGoogleChat={() => setIsGoogleChatOpen(true)}
+        onOpenGoogleForms={() => setIsGoogleFormsOpen(true)}
         onToggleMainMenu={() => setIsMainMenuOpen(true)}
         isSyncing={isSyncing}
         onManualSync={handleManualSync}
@@ -397,6 +409,32 @@ export default function App() {
         onClose={() => setIsNotificationsOpen(false)}
         notifications={notifications}
         onMarkAllRead={() => setNotifications(prev => prev.map(n => ({ ...n, read: true })))}
+      />
+
+      {/* Google Tasks Drawer */}
+      <GoogleTasksDrawer
+        isOpen={isGoogleTasksOpen}
+        onClose={() => setIsGoogleTasksOpen(false)}
+      />
+
+      {/* Google Docs Drawer */}
+      <GoogleDocsDrawer
+        isOpen={isGoogleDocsOpen}
+        onClose={() => setIsGoogleDocsOpen(false)}
+        terminalHistoryText={history.map(h => `$ ${h.command}\n${h.output.content}`).join('\n\n')}
+      />
+
+      {/* Google Chat Drawer */}
+      <GoogleChatDrawer
+        isOpen={isGoogleChatOpen}
+        onClose={() => setIsGoogleChatOpen(false)}
+        terminalHistoryText={history.map(h => `$ ${h.command}\n${h.output.content}`).join('\n\n')}
+      />
+
+      {/* Google Forms Drawer */}
+      <GoogleFormsDrawer
+        isOpen={isGoogleFormsOpen}
+        onClose={() => setIsGoogleFormsOpen(false)}
       />
 
       {/* Code / File Viewer Modal */}

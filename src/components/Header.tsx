@@ -1,5 +1,5 @@
 import React from 'react';
-import { Menu, Archive, Share2, Github, ChevronDown, Columns, BookOpen } from 'lucide-react';
+import { Menu, Archive, Share2, Github, ChevronDown, Columns, BookOpen, ListTodo, FileText, MessageCircle, FileSpreadsheet } from 'lucide-react';
 import { UserProfile, PushNotification } from '../types/shell';
 
 interface HeaderProps {
@@ -7,6 +7,10 @@ interface HeaderProps {
   notifications: PushNotification[];
   onOpenAuth: () => void;
   onOpenNotifications: () => void;
+  onOpenGoogleTasks?: () => void;
+  onOpenGoogleDocs?: () => void;
+  onOpenGoogleChat?: () => void;
+  onOpenGoogleForms?: () => void;
   onToggleMainMenu: () => void;
   isSyncing: boolean;
   onManualSync: () => void;
@@ -21,6 +25,10 @@ export const Header: React.FC<HeaderProps> = ({
   notifications,
   onOpenAuth,
   onOpenNotifications,
+  onOpenGoogleTasks,
+  onOpenGoogleDocs,
+  onOpenGoogleChat,
+  onOpenGoogleForms,
   onToggleMainMenu,
   isSyncing,
   onManualSync,
@@ -47,12 +55,60 @@ export const Header: React.FC<HeaderProps> = ({
 
         {/* Right Action Icons & GitHub Dropdown */}
         <div className="flex items-center space-x-2">
+          {/* Google Chat Button */}
+          {onOpenGoogleChat && (
+            <button
+              onClick={onOpenGoogleChat}
+              className="flex items-center space-x-1.5 px-2.5 py-1 bg-black border-2 border-cyan-400 text-cyan-300 hover:bg-cyan-400 hover:text-black font-extrabold text-xs transition-all cursor-pointer shadow-[0_0_8px_rgba(34,211,238,0.3)] active:scale-95 uppercase"
+              title="Mở Google Chat"
+            >
+              <MessageCircle className="w-3.5 h-3.5" />
+              <span className="hidden lg:inline">Google Chat</span>
+            </button>
+          )}
+
+          {/* Google Forms Button */}
+          {onOpenGoogleForms && (
+            <button
+              onClick={onOpenGoogleForms}
+              className="flex items-center space-x-1.5 px-2.5 py-1 bg-black border-2 border-cyan-400 text-cyan-300 hover:bg-cyan-400 hover:text-black font-extrabold text-xs transition-all cursor-pointer shadow-[0_0_8px_rgba(34,211,238,0.3)] active:scale-95 uppercase"
+              title="Mở Google Forms"
+            >
+              <FileSpreadsheet className="w-3.5 h-3.5" />
+              <span className="hidden lg:inline">Google Forms</span>
+            </button>
+          )}
+
+          {/* Google Docs Button */}
+          {onOpenGoogleDocs && (
+            <button
+              onClick={onOpenGoogleDocs}
+              className="flex items-center space-x-1.5 px-2.5 py-1 bg-cyan-400 text-black hover:bg-cyan-300 font-extrabold text-xs transition-all cursor-pointer shadow-[0_0_10px_rgba(34,211,238,0.4)] active:scale-95 uppercase border-2 border-cyan-300"
+              title="Mở Google Docs"
+            >
+              <FileText className="w-3.5 h-3.5 text-black stroke-[2.5]" />
+              <span className="hidden sm:inline">Google Docs</span>
+            </button>
+          )}
+
+          {/* Google Tasks Button */}
+          {onOpenGoogleTasks && (
+            <button
+              onClick={onOpenGoogleTasks}
+              className="flex items-center space-x-1.5 px-2.5 py-1 bg-black border-2 border-cyan-400 text-cyan-300 hover:bg-cyan-400 hover:text-black font-extrabold text-xs transition-all cursor-pointer shadow-[0_0_8px_rgba(34,211,238,0.3)] active:scale-95 uppercase"
+              title="Mở Google Tasks"
+            >
+              <ListTodo className="w-3.5 h-3.5" />
+              <span className="hidden sm:inline">Google Tasks</span>
+            </button>
+          )}
+
           {/* RFC Editor Badge Link */}
           <a
             href="https://www.rfc-editor.org/"
             target="_blank"
             rel="noreferrer"
-            className="hidden sm:flex items-center space-x-1 px-2.5 py-1 bg-black border-2 border-neutral-700 hover:border-cyan-400 text-xs text-cyan-300 font-bold font-mono transition-colors"
+            className="hidden md:flex items-center space-x-1 px-2.5 py-1 bg-black border-2 border-neutral-700 hover:border-cyan-400 text-xs text-cyan-300 font-bold font-mono transition-colors"
           >
             <BookOpen className="w-3.5 h-3.5 text-cyan-400" />
             <span>rfc-editor.org</span>
